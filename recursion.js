@@ -82,7 +82,21 @@ function revString(str) {
 /** gatherStrings: given an object, return an array of all of the string values. */
 
 function gatherStrings(obj) {
+  //base case
+  //if no more keys left to process
+  if (Object.keys(obj).length === 0) return [];
 
+  //normal case
+  const foundStrings = [];
+  for (let key in obj) {
+    if (typeof obj[key] === "string") {
+      foundStrings.push(obj[key]);
+    } else if (typeof obj[key] === "object" && obj[key] !== null) {
+      //use the spread operator to add each string
+      foundStrings.push(...gatherStrings(obj[key]));
+    }
+  }
+  return foundStrings;
 }
 
 /** binarySearch: given a sorted array of numbers, and a value,
